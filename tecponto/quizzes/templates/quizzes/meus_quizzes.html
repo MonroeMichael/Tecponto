@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+</head>
+<body>
+    <h1>Bem-vindo ao TecPonto!</h1>
+    
+    <h2>Meus Quizzes</h2>
+
+    {% block content %}
+        {% if quizzes %}
+            <ul>
+                {% for quiz in quizzes %}
+                    <li>
+                        <a href="{% url 'quiz' quiz.id %}">{{ quiz.nome }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum quiz disponível no momento.</p>
+        {% endif %}
+
+        <hr>
+
+        <!-- Link para a página do usuário -->
+        <p><a href="{% url 'pagina_usuario' %}">Minha Conta</a></p>
+
+        <!-- Formulário de Logout -->
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% endblock %}
+</body>
+</html>

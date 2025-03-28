@@ -1,0 +1,12 @@
+<h2>Bem-vindo, {{ user.username }}</h2>
+
+<div style="margin-top: 10px;">
+    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <a href="{% url 'meus_quizzes' %}">
+        <button>Meus Quizzes</button>
+    </a>
+</div>

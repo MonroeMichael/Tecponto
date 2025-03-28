@@ -1,0 +1,9 @@
+<h2>Quiz Finalizado!</h2>
+<p>Parabéns, você completou o quiz "{{ quiz.nome }}"!</p>
+
+{% if score %}
+    <p>Sua pontuação: {{ score.pontuacao }}</p>
+{% endif %}
+
+<a href="{% url 'meus_quizzes' %}">Voltar para Meus Quizzes</a>
+<a href="{% url 'logout' %}">Sair</a>

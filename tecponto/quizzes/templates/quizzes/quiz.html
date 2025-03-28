@@ -1,0 +1,10 @@
+<h2>{{ quiz.nome }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {% for pergunta in perguntas %}
+        <p>{{ pergunta.texto }}</p>
+        <input type="text" name="resposta_{{ pergunta.id }}">
+        <p>Dica: {{ pergunta.dica }}</p>
+    {% endfor %}
+    <button type="submit">Responder</button>
+</form>
