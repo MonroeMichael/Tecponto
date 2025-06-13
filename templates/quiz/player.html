@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player de Música</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            width: 300px;
+            height: 100px;
+        }
+        .player-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <!-- Remover autoplay -->
+        <audio id="audio-player" loop>
+            <source src="{% static 'audio/musica.mp3' %}" type="audio/mpeg">
+        </audio>
+        <button onclick="playMusic()">Tocar</button>
+        <button onclick="pauseMusic()">Pausar</button>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio-player');
+        audio.volume = 0.3; // volume inicial
+
+        function playMusic() {
+            audio.play().catch(error => {
+                console.error('Erro ao tentar reproduzir o áudio:', error);
+            });
+        }
+
+        function pauseMusic() {
+            audio.pause();
+        }
+        window.addEventListener('beforeunload', () => {
+            if (playerWindow && !playerWindow.closed) {
+                playerWindow.close();
+            }
+        });
+    </script>
+</body>
+</html>

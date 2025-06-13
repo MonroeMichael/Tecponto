@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/musica.css' %}">
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 rounded">
+  <h5>Meu Perfil</h5>
+
+  <div class="d-flex align-items-center gap-2">
+    <!-- Botão de tema -->
+    <button id="theme-toggle" class="theme-button btn btn-outline-secondary btn-sm">
+      <span class="icon">☀️</span> Tema
+    </button>
+
+    <!-- Botão para abrir o player de música -->
+    <button id="btn-play-pause" onclick="openPlayer()" class="btn btn-outline-primary btn-sm">
+      ▶️ Tocar
+    </button>
+
+    <script>
+      let playerWindow = null;
+
+      function openPlayer() {
+        // Verifica se a janela já está aberta para evitar múltiplas janelas
+        if (!playerWindow || playerWindow.closed) {
+          playerWindow = window.open(
+            "{% url 'player' %}",
+            'MusicPlayer',
+            'width=320,height=120,menubar=no,toolbar=no,location=no,status=no,resizable=yes'
+          );
+        }
+        else {
+          playerWindow.focus(); // Foca na janela existente se já estiver aberta
+        }
+      }
+    </script>
+  </div>
+</div>
+
+<!-- Informações do perfil -->
+<div class="conteudo-quiz mb-4 all-custom">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <p><strong>Email:</strong> {{ request.user.email }}</p>
+      <p><strong>Pontos totais:</strong> {{ total_points }}</p>
+      <p><strong>Quizzes concluídos:</strong> {{ quizzes_done }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Histórico de partidas -->
+<div class="conteudo-quiz mb-4 all-custom">
+  <h4>Últimas partidas</h4>
+  <div class="table table-custom">
+    <table class="table table-sm table-bordered table-hover rounded table-custom">
+      <thead class="table-light">
+        <tr>
+          <th>Data</th>
+          <th>Quiz</th>
+          <th>Matéria</th>
+          <th>Pontos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for h in histories %}
+          <tr>
+            <td>{{ h.last_played|date:"d/m/Y H:i" }}</td>
+            <td>{{ h.quiz.title }}</td>
+            <td>{{ h.quiz.subject.name }}</td>
+            <td>{{ h.score }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">Sem partidas ainda.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Conquistas -->
+<div class="conteudo-quiz mb-4 all-custom">
+  <h4>Conquistas</h4>
+  <ul class="list-inline fs-4">
+    {% for ua in achievements %}
+      <li class="list-inline-item" title="{{ ua.achievement.name }}">
+        {{ ua.achievement.icon }}
+      </li>
+    {% empty %}
+      <li>Ainda sem conquistas.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- Botão de navegação -->
+<div class="mt-4">
+  <a href="{% url 'quiz_list' %}" class="btn btn-primary ms-2 btn-z">Meus Quizzes</a>
+</div>
+
+<!-- Script de troca de tema -->
+<script src="{% static 'script/trocatema.js' %}"></script>
+{% endblock %}

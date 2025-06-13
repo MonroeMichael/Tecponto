@@ -1,0 +1,192 @@
+:root {
+  --background-image: url('../img/fundo1.png');
+  --background-color: white;
+  --text-color: black;
+  --collor-bv: black;
+  --sem-fundo: black;
+  --background-color2: white;
+}
+
+body.dark-mode {
+  --background-image: url('../img/fundo2.png');
+  --background-color: black;
+  --text-color: white;
+  --collor-bv: gray;
+  --sem-fundo: white;
+  --background-color2: rgb(148, 148, 148);
+}
+
+body {
+  background-image: var(--background-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: color 0.3s ease;
+}
+
+h1, h2 {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  color: var(--sem-fundo);
+  transition: color 0.3s ease;
+}
+
+h5 {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  font-size: 24px;
+  color: black;
+}
+
+.card {
+  background-color: #ffffffcc;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  color: #333;
+}
+
+.card-text {
+  color: #666;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.theme-button {
+  background-color: #540e0e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.darkmode .theme-button {
+  background-color: #290707;
+}
+
+.theme-button1 {
+  visibility: hidden;
+  position: absolute;
+}
+
+.theme-button:hover {
+  background-color: #a31515;
+}
+
+a {
+  color: var(--text-color) !important;
+  transition: color 0.3s ease;
+}
+
+button {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: background-color 0.3s ease !important;
+  transition: color 0.3s ease !important;
+}
+
+p {
+  text-align: center;
+  font-size: 11px;
+  color: var(--collor-bv);
+  transition: color 0.3s ease;
+}
+
+footer {
+  position: fixed;
+  bottom: -18px;
+  width: 100%;
+  background: #f8f8f8;
+  background-position-y: center;
+  text-align: center;
+}
+
+/* Garante que o conteúdo principal fique legível mesmo com imagem no fundo */
+.conteudo-quiz {
+  background-color: rgba(255, 255, 255, 0.93);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajusta botão ao modo escuro */
+body.dark-mode .btn-s {
+  color: white;
+  background-color: #666;
+  border-color: #333;
+}
+body.dark-mode .btn-s:hover {
+  background-color: #444;
+}
+body.dark-mode .btn-z {
+  color: white;
+  background-color: #333;
+  border-color: #666;
+}
+body.dark-mode .btn-z:hover {
+  background-color: #444;
+}
+
+/* Nova classe para estilizar o conteúdo principal */
+.conteudo-quiz {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Muda a cor de alguns backgrounds como; barra de navegação, ao redor do email, pontos totais e quizzes concluidos, últimas partidas e conquistas*/
+.all-custom {
+  background-color: var(--background-color) !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.table-custom{
+  background-color: gray !important;
+  transition: background-color 0.3s ease !important;
+}
+
+th, td{
+  color: var(--text-color) !important;
+  background-color: var(--background-color2) !important;
+  transition: color 0.3s ease !important;
+  transition: background-color 0.3s ease !important;
+}
+
+/* Player de música fixo */
+.btn-play-pause {
+  background-color: #0d6efd; /* azul bootstrap */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-play-pause:hover {
+  background-color: #0b5ed7; /* azul mais escuro no hover */
+}
+/* musica.css */
+.theme-button,
+.btn-play-pause {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Meus Quizzes{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Bem-vindo ao TecPonto!</h1>
+<h2>Meus Quizzes</h2>
+
+<form method="get" class="row gy-2 gx-3 align-items-center mb-4">
+  <div class="col-md-3">
+    <input name="q" class="form-control" placeholder="Buscar…" value="{{ request.GET.q }}">
+  </div>
+  <div class="col-md-3">
+    <select name="subject" class="form-select">
+      <option value="">Matéria</option>
+      {% for subj in subjects %}
+        <option value="{{ subj.id }}" {% if subj.id|stringformat:"s" == request.GET.subject %}selected{% endif %}>
+          {{ subj.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="difficulty" class="form-select">
+      <option value="">Dificuldade</option>
+      {% for code,label in difficulties %}
+        <option value="{{ code }}" {% if code == request.GET.difficulty %}selected{% endif %}>
+          {{ label }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-primary w-100">Filtrar</button>
+  </div>
+</form>
+
+{% if quizzes %}
+  <div class="row">
+    {% for quiz in quizzes %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ quiz.title }}</h5>
+            <p class="card-text text-muted">{{ quiz.subject.name }} • {{ quiz.difficulty }}</p>
+            <a href="{% url 'play_quiz' quiz.id %}" class="btn btn-success">Começar</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>Nenhum quiz disponível no momento.</p>
+{% endif %}
+
+<!--button invisivel para fazer o trocatema.js reconhecer essa pagina, não juntar ele no base.html não funciona-->
+<div class="d-flex justify-content-end mb-3">
+  <button id="theme-toggle" class="theme-button1">
+    <span></span>
+  </button>
+</div>
+
+
+{% endblock %}

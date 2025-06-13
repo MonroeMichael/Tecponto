@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Quiz Finalizado{% endblock %}
+
+{% block content %}
+  <!-- Botão de tema -->
+  <div class="d-flex justify-content-end mb-3">
+    <button id="theme-toggle" class="theme-button">
+      <span class="icon">☀️</span> Alternar Tema
+    </button>
+  </div>
+
+  <div class="text-center">
+    <h2>Parabéns! Você concluiu o quiz: <em>{{ quiz.title }}</em></h2>
+
+    {% if history %}
+      <div class="result-container my-4 p-3 rounded shadow-sm">
+        <p><strong>Pontuação final:</strong> {{ history.score }}</p>
+        <p><strong>Total de tentativas:</strong> {{ history.attempts }}</p>
+      </div>
+    {% else %}
+      <p class="text-muted">Não foi possível recuperar seu histórico.</p>
+    {% endif %}
+
+    <a href="{% url 'quiz_list' %}" class="btn btn-primary mt-3">Voltar à lista de quizzes</a>
+  </div>
+  <script src="{% static 'script/trocatema.js' %}"></script>
+
+  {% if help_message and help_link %}
+    <div class="alert alert-warning mt-4">
+      <p>{{ help_message }}</p>
+      <a href="{{ help_link }}" target="_blank" class="btn btn-primary mt-3 align-items-center">
+        Ver material de apoio
+      </a>
+    </div>
+  {% endif %}
+
+{% endblock %}
+
+  <!-- Script para controle de áudio -->
+  <script>
+
+    // Volume padrão
+    player.volume = 0.5;
+
+    btn.addEventListener('click', () => {
+      if (player.paused) {
+        player.play();
+        btn.textContent = '⏸️ Pausar';
+      } else {
+        player.pause();
+        btn.textContent = '▶️ Tocar';
+      }
+    });
+  </script>
+
+  <script src="{% static 'script/trocatema.js' %}"></script>
+
+<!-- Player de música oculto -->
+<audio id="musica-fundo" loop style="display:none;">
+  <source src="{% static 'audio/musica.mp3' %}" type="audio/mpeg">
+  Seu navegador não suporta áudio.
+</audio>
+
+<!-- Botão play/pause -->
+<div class="mb-3">
+  <button id="btn-play-pause" class="btn btn-outline-primary btn-sm">
+    ▶️ Tocar
+  </button>
+</div>
+
+<script>
+  const player = document.getElementById('musica-fundo');
+  const btn = document.getElementById('btn-play-pause');
+
+  player.volume = 0.5;
+
+  btn.addEventListener('click', () => {
+    if (player.paused) {
+      player.play().catch(e => console.log('Erro ao tocar áudio:', e));
+      btn.textContent = '⏸️ Pausar';
+    } else {
+      player.pause();
+      btn.textContent = '▶️ Tocar';
+    }
+  });
+</script>

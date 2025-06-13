@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ quiz.title }}{% endblock %}
+
+{% block content %}
+  <!-- Botão de tema -->
+  <div class="d-flex justify-content-end mb-3">
+    <button id="theme-toggle" class="theme-button">
+      <span class="icon">☀️</span> Alternar Tema
+    </button>
+  </div>
+  <!-- Player de Música -->
+<audio id="musica-fundo" loop>
+  <source src="{% static 'audio/musica.mp3' %}" type="audio/mpeg">
+  Seu navegador não suporta áudio.
+</audio>
+
+<!-- Botão para tocar/pausar -->
+<button id="btn-play-pause" onclick="openPlayer()" class="btn-play-pause">
+  ▶️ Tocar
+</button>
+
+<script>
+  let playerWindow = null;
+
+  function openPlayer() {
+    // Verifica se a janela já está aberta para evitar múltiplas janelas
+    if (!playerWindow || playerWindow.closed) {
+      playerWindow = window.open(
+        "{% url 'player' %}",
+        'MusicPlayer',
+        'width=320,height=120,menubar=no,toolbar=no,location=no,status=no,resizable=yes'
+      );
+    }
+    else {
+      playerWindow.focus(); // Foca na janela existente se já estiver aberta
+    }
+  }
+
+  window.addEventListener('beforeunload', () => {
+    if (playerWindow && !playerWindow.closed) {
+      playerWindow.close();
+    }
+  });
+</script>
+
+
+  <h2>{{ quiz.title }}</h2>
+
+  <form method="post" class="quiz-form">
+    {% csrf_token %}
+    <div class="pergunta">
+      <h4>{{ question.text }}</h4>
+
+      {% for resposta in answers %}
+        <div class="form-check text-start">
+          <label class="form-check-label">
+            <input type="radio" name="answer" value="{{ resposta.id }}" class="form-check-input">
+            {{ resposta.text }}
+          </label>
+        </div>
+      {% endfor %}
+
+      {% if error %}
+        <p class="text-danger mt-2"><strong>{{ error }}</strong></p>
+        {% if hint %}
+          <p class="dica"><strong>Dica:</strong> {{ hint }}</p>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Responder</button>
+  </form>
+  <script src="{% static 'script/trocatema.js' %}"></script>
+{% endblock %}
